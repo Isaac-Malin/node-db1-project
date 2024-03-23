@@ -37,19 +37,21 @@ router.post(
   }
 );
 
-router.put("/:id", checkAccountId, checkAccountPayload, (req, res, next) => {
+router.put("/:id", checkAccountId, checkAccountPayload, async (req, res, next) => {
   // DO YOUR MAGIC
-  // try {
-  // } catch (err) {
-  //   next(err);
-  // }
+  try {
+    const updatedAccount = await Account.updateById(req.params.id, req.body)
+    res.status(200).json(updatedAccount)
+  } catch (err) {
+    next(err);
+  }
 });
 
 router.delete("/:id", checkAccountId, async (req, res, next) => {
   // DO YOUR MAGIC
   try {
     await Account.deleteById(req.params.id)
-    res.status(req.account)
+    res.json(req.account)
   } catch (err) {
     next(err);
   }
