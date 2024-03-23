@@ -1,13 +1,20 @@
+const db = require('../../data/db-config')
+
 const getAll = () => {
   // DO YOUR MAGIC
+  return db('accounts');
 }
 
 const getById = id => {
-  // DO YOUR MAGIC
+  // select * from accounts where id = 1
+  return db('accounts').where('id', id).first();
 }
 
-const create = account => {
+const create = async account => {
   // DO YOUR MAGIC
+  // INSERT INTO account ('account')
+  const [id] = await db('accounts').insert(account)
+  return getById(id)
 }
 
 const updateById = (id, account) => {
@@ -16,6 +23,9 @@ const updateById = (id, account) => {
 
 const deleteById = id => {
   // DO YOUR MAGIC
+  return db('accounts')
+  .where('id', id)
+  .del();
 }
 
 module.exports = {
